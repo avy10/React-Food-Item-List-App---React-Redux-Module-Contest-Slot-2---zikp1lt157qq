@@ -10,25 +10,56 @@ function FoodList() {
 	const [isSecondCardEnabled, setIsSecondCardEnabled] = useState(false);
 	const [isFormEnabled, setIsFormEnabled] = useState(false);
 
+	const [hateU, setHateU] = useState(false);
+	function iamPissed() {
+		setIsFirstCardEnabled(true);
+		setIsSecondCardEnabled(true);
+		setHateU(true);
+		setIsFormEnabled(true);
+	}
+
+	function meganFox() {
+		const newFood = {
+			name: itemName,
+			type: foodType,
+			hott: spicinessLevel,
+		};
+		setFoods((prev) => [...prev, newFood]);
+		setIsFirstCardEnabled(false);
+		setIsSecondCardEnabled(false);
+		setHateU(false);
+		setIsFormEnabled(false);
+		setItemName("");
+		setFoodType("");
+		setSpicinessLevel("");
+	}
+	function meguunFaxx(val) {
+		setFoods((prev) => prev.filter((ele) => ele.name !== val));
+	}
 	return (
 		<>
 			<div className="container">
 				<h1>Food Items List</h1>
-				<button>Add Food</button>
+				<button onClick={iamPissed}>Add Food</button>
 
-				<div className="card-container">
-                        <>
+				{hateU && (
+					<>
+						<div className="card-container">
 							<h2>Item Name:</h2>
 							<input
 								name="itemName"
 								type="text"
 								disabled={!isFirstCardEnabled}
+								value={itemName}
+								onChange={(e) => setItemName(e.target.value)}
 							/>
 							<h2>Food Type:</h2>
 							<input
 								name="foodType"
 								type="text"
 								disabled={!isFirstCardEnabled}
+								value={foodType}
+								onChange={(e) => setFoodType(e.target.value)}
 							/>
 							<div className={`card`}>
 								<form>
@@ -37,21 +68,39 @@ function FoodList() {
 										name="spicinessLevel"
 										type="text"
 										disabled={!isFormEnabled}
+										value={spicinessLevel}
+										onChange={(e) =>
+											setSpicinessLevel(e.target.value)
+										}
 									/>
 								</form>
 							</div>
-						</>
-				</div>
-                <div className={`card ${isSecondCardEnabled ? "" : "disabled"}`}>
-						<button>Save</button>
-				</div>
+						</div>
+						<div
+							className={`card ${
+								isSecondCardEnabled ? "" : "disabled"
+							}`}
+						>
+							<button onClick={meganFox}>Save</button>
+						</div>
+					</>
+				)}
 
 				<ul className="list">
-                        <li>
-							{itemName} ({foodType}) - Spiciness Level:{" "}
-							{spicinessLevel}
-							<button>Delete</button>
+					{foods.map((ele, index) => (
+						<li key={index}>
+							{ele.name} ({ele.type}) = Spiciness Level:{" "}
+							{ele.hott}
+							<button onClick={() => meguunFaxx(ele.name)}>
+								Delete
+							</button>
 						</li>
+					))}
+					{/* <li>
+						{itemName} ({foodType}) - Spiciness Level:{" "}
+						{spicinessLevel}
+						<button>Delete</button>
+					</li> */}
 				</ul>
 			</div>
 		</>
