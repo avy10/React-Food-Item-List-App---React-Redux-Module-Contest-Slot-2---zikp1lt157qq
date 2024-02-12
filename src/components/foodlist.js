@@ -102,7 +102,7 @@ function FoodList() {
 				<ul className="list">
 					{foods.map((ele, index) => (
 						<li key={index}>
-							{ele.name} ({ele.type}) = Spiciness Level:{" "}
+							{ele.name} ({ele.type}) - Spiciness Level:{" "}
 							{ele.hott}
 							<button onClick={() => meguunFaxx(ele.name)}>
 								Delete
